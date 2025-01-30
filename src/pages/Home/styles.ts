@@ -1,5 +1,15 @@
 import styled from "styled-components"
 
+export const Wrap = styled.div`
+ 
+ display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    margin: 0 auto;
+    height: 100%;
+`
+
 export const HomeContainer = styled.div`
     display: flex;
     flex-direction: column;
