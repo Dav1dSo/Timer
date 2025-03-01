@@ -27,8 +27,6 @@ export const HomeContainer = styled.div`
     button[type="submit"] {
         height: 58px;
         border: 0;
-        background: ${(props) => props.theme['green-500']};
-        color: ${(props) => props.theme['white']};
         font-weight: bold;
         padding: 0 1.25rem;
         border-radius: 8px;
@@ -39,9 +37,6 @@ export const HomeContainer = styled.div`
             cursor: not-allowed;
         }
 
-        &:not(:disabled):hover {
-            background: ${(props) => props.theme['green-700']};
-        }
     }
 
 `    
@@ -87,35 +82,30 @@ export const CountDownContainer = styled.div`
     font-family: 'Roboto Mono', monospace;
     font-size: 10rem;    
     line-height: 8rem;
-    color: ${(props) => props.theme['gray-100']};
 
     display: flex;
     gap: 1rem;
 
     span {        
-        background: ${(props) => props.theme['gray-700']};
+        
         padding: 2rem 1rem;
         border-radius: 8px;
     }
 `     
 
-export const StartCountDownButton = styled.button`
+export const BaseCountDownButton = styled.button`
     width: 100%;
     height: 40px;
     border-radius: 4px;
     border: 0;
     margin: 8px;
-    background-color: ${(props) => props.theme['green-500']};
-    color: ${(props) => props.theme['white']};
+    color: ${(props) =>  props.theme['gray-100']};
 
     &:disabled {
         opacity: 0.7;
         cursor: not-allowed;
     }
 
-    &:not(:disabled):hover {        
-        background: ${(props) => props.theme['green-700']};
-    }
 `
 
 export const Separator = styled.div`
@@ -127,3 +117,18 @@ export const Separator = styled.div`
     display: flex;    
     justify-content: center;
 `
+export const StartCountDownButton = styled(BaseCountDownButton)`
+    background: ${(props) => props.theme['green-700']};
+
+    &:not(:disabled):hover {
+        background: ${(props) => props.theme['green-500']};
+    }
+`;
+
+export const StopCountDownButton = styled(BaseCountDownButton)`
+    background: ${(props) => props.theme['red-500']};
+
+    &:not(:disabled):hover {
+        background: ${(props) => props.theme['red-700']};
+    }
+`;
