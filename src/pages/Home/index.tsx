@@ -22,6 +22,7 @@ interface CycleInterface {
     minutesAmount: number,
     startDate: Date,
     interrupted_at?: Date
+    fineshedDate?: Date
 }
 
 export function HomePage() {
@@ -53,25 +54,45 @@ export function HomePage() {
     }
 
     const activeCycle = cycles.find((cycle) => cycle.id == cycleActiveId)
+    const totalSeconds = activeCycle ? activeCycle.minutesAmount * 60 : 0
+
 
     useEffect(() => {
         let interval: number;
 
         if (activeCycle) {
             interval = setInterval(() => {
-                setAmountSecondsPassed(differenceInSeconds(new Date(), activeCycle.startDate))
+                const secondsDiferrence = differenceInSeconds(new Date(), activeCycle.startDate)
+
+                if (secondsDiferrence >= totalSeconds) {
+                    setCycle((state) =>
+                        state.map((cycle) => {
+                            if (cycle.id === cycleActiveId) {
+                                return { ...cycle, fineshedDate: new Date() };  
+                            } else {
+                                return cycle;  
+                            }
+                        })
+                    );
+                    setAmountSecondsPassed(totalSeconds)
+                    clearInterval(interval)
+                }
+                else {
+                    setAmountSecondsPassed(secondsDiferrence)
+                }
             }, 1000)
+            
         } 
 
         return () => {
             clearInterval(interval)
         }
 
-    }, [activeCycle])
+    }, [activeCycle, totalSeconds, cycleActiveId])
 
     function handlerPausedCycle() {
-        setCycle((cycles) =>
-            cycles.map((cycle) => {
+        setCycle((state) =>
+            state.map((cycle) => {
                 if (cycle.id === cycleActiveId) {
                     return { ...cycle, interrupted_at: new Date() };  
                 } else {
@@ -83,7 +104,6 @@ export function HomePage() {
         setActiveCycleId(null);  
     }
 
-    const totalSeconds = activeCycle ? activeCycle.minutesAmount * 60 : 0
     const currentSeconds = activeCycle ? totalSeconds - amountSecondsPassed : 0 
 
     const minutesAmount = Math.floor(currentSeconds / 60)
