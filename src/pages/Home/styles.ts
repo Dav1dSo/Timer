@@ -97,7 +97,27 @@ export const CountDownContainer = styled.div`
         padding: 2rem 1rem;
         border-radius: 8px;
     }
-`                                       
+`     
+
+export const StartCountDownButton = styled.button`
+    width: 100%;
+    height: 40px;
+    border-radius: 4px;
+    border: 0;
+    margin: 8px;
+    background-color: ${(props) => props.theme['green-500']};
+    color: ${(props) => props.theme['white']};
+
+    &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+
+    &:not(:disabled):hover {        
+        background: ${(props) => props.theme['green-700']};
+    }
+`
+
 export const Separator = styled.div`
     padding: 2rem 0;
     color: ${(props) => props.theme['green-500']};
